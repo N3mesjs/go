@@ -7,7 +7,13 @@ func main(){
 		fmt.Println(i)
 	}
 
-	for j := 0; j<3; j++ {
+	var j int
+
+	for j = 0; j<3; j++ {
 		fmt.Println(j)
+	}
+
+	for i := range 6 {
+		fmt.Println("range", i)
 	}
 }
