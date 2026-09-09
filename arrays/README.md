@@ -37,3 +37,15 @@ the following syntax:
 array := b[start:end] //the end is excluded, this choise was made to facilitate the lenght calculation
 ```
 
+## Zeros initialization
+For the slices if we initialize like `[]int` it will be empty with no 
+elements, but we can give it an initial size and it will have all zeros
+values like using the following syntax:
+```go
+array := make([]int, 3, 5)
+```
+The third parameters that is the **cap** so a limit for the size of
+the underlying array, it is used for ottimization to use an array
+of a size instead of using a bigger one for nothing.
+So the initial lenght will be 3 but it can grow up to **5 elements**,
+After it will create a new array for the slice that will be **bigger**
