@@ -15,4 +15,10 @@ func main() {
 	fmt.Println("lenght of b:", len(b))
 	b = [...]int{100, 3:400, 500}
 	fmt.Println(b)
+
+	// Chapter about slices
+
+	//s:= make([]int, 3)
+	s:= b[1:4]
+	fmt.Println(s, len(s))
 }

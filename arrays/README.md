@@ -25,3 +25,15 @@ arr := [5]int{100, 3:400, 500} // [100,0,0,400,500]
 ## Two dimensional arrays
 You can also have 2D arrays by using two square brackets like this `[][]`
 
+---
+
+# Slices
+slices is a dinamically sized array, but it doesn't store values
+its self but it uses an array to store values.
+
+We can create a slice starting from an existing array using
+the following syntax:
+```go
+array := b[start:end] //the end is excluded, this choise was made to facilitate the lenght calculation
+```
+
