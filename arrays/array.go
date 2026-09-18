@@ -18,7 +18,17 @@ func main() {
 
 	// Chapter about slices
 
-	//s:= make([]int, 3)
-	s:= b[1:4]
+	fmt.Println("------- Slices! -------") //Notice that end is not included
+	s:= make([]int, 3) //make a slice with lenght 3, initialized with 0
 	fmt.Println(s, len(s))
+	fmt.Println(cap(s), cap(b))
+	s = append(s, 1,2,3,4,5)
+	fmt.Println(s, len(s), cap(s))
+
+	t:= s[0:3] //Notice that end is not included
+	t = append(t, 100)
+	fmt.Println(t, len(t), cap(t))
+
+	copy(t, s) //overwrite the firt min(len(t), len(s)) elements of t with s
+	fmt.Println(t)
 }
