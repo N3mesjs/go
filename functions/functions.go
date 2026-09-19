@@ -29,6 +29,15 @@ func exp(base, exp float64) (res float64) {
 	// return res
 }
 
+func variadic_sum(nums ...int) (sum int){
+	for _, val := range nums {
+		//fmt.Println(val)
+		sum += val
+	}
+
+	return sum
+}
+
 func main() {
 	fmt.Println("the sum of 43 + 12 is:", add(43, 12))
 
@@ -42,4 +51,6 @@ func main() {
 	fmt.Println(str1, str2)
 
 	fmt.Println(exp(3, 2))
+
+	fmt.Println(variadic_sum(1,2,3,4,5,6,6,7,7,4,35435,35))
 }
