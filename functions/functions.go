@@ -53,4 +53,8 @@ func main() {
 	fmt.Println(exp(3, 2))
 
 	fmt.Println(variadic_sum(1,2,3,4,5,6,6,7,7,4,35435,35))
+
+	var array = []int{1,3,4,566,5}
+	fmt.Println(variadic_sum(array...))
+	//fmt.Println(array...) this will not work, because the compiler will not know how to handle it, it needs to be passed to a function that accepts a variadic parameter
 }

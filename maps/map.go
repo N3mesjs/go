@@ -12,6 +12,8 @@ func main(){
 	m["three"] = 3
 
 	fmt.Println("third element:", m["three"])
+	// when we access a key we get two values, the value and a 
+	// boolean that tells us if the key exists or not
 	val, ok := m["three"]
 	fmt.Println(val, ok)
 	delete(m, "three")
