@@ -12,6 +12,10 @@ func vertex_Init(x, y int) (v Vertex) {
 	return
 }
 
+func (v Vertex) String() string {
+	return fmt.Sprintf("(%d, %d)", v.X, v.Y)
+}
+
 // Notice that if we have a pointer to a struct
 // and try to access the values inside it, we can omit
 // the following syntax (*ptr).x, go will automatically
@@ -21,5 +25,6 @@ func main(){
 	p1 := vertex_Init(3, 5)
 
 	ptr := &p1
-	fmt.Println(ptr, ptr.X, ptr.Y, *ptr)
+	fmt.Printf("%v %d %d %v\n", ptr, ptr.X, ptr.Y, *ptr)
+	fmt.Print(p1.String())
 }
