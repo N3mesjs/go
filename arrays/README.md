@@ -37,6 +37,10 @@ the following syntax:
 array := b[start:end] //the end is excluded, this choise was made to facilitate the lenght calculation
 ```
 
+Notice that with this notation we modify the
+original array because its like a reference
+to it.
+
 ## Zeros initialization
 For the slices if we initialize like `[]int` it will be empty with no 
 elements, but we can give it an initial size and it will have all zeros
