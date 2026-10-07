@@ -14,6 +14,7 @@ The type is inferred by the compiler at compile time based on the value on the r
 ## 3. Short Variable Declaration (`:=`)
 `a := "cacca"`
 Shorthand syntax that declares, infers, and assigns in a single step.
+the variable's type is inferred from the value on the right hand side. 
 * **Scope:** Works **ONLY inside functions**.
 * **Bonus:** Allows redeclaration of an existing variable if at least one other variable in the tuple is new (common with `result, err := ...`).
 
