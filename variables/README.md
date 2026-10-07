@@ -28,4 +28,24 @@ Type declaration is usually omitted because untyped constants provide flexibilit
 
 We have to know the value at compile time so unlike 
 Javascript it cannot take as value a result of a 
-function because the value is calculated at run time and not at compile time
+function because the value is calculated at run time and not at compile time.
+
+We can have a multiple constants declaration
+like this:
+```go
+const (
+    True = true
+    cacca = false
+)
+```
+
+## 5. The `<<` or `>>` keyword
+The << or >> are used to shift bits!
+
+we could have a code like this:
+```go
+const Big = 1 << 100
+```
+this says make me a binary number
+that starts with one and its followed by
+100 zeros!
