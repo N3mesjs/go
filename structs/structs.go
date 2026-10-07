@@ -16,6 +16,11 @@ func (v Vertex) String() string {
 	return fmt.Sprintf("(%d, %d)", v.X, v.Y)
 }
 
+func (v *Vertex) Scale(factor int){
+	v.X *= factor
+	v.Y *= factor
+}
+
 // Notice that if we have a pointer to a struct
 // and try to access the values inside it, we can omit
 // the following syntax (*ptr).x, go will automatically
@@ -26,5 +31,7 @@ func main(){
 
 	ptr := &p1
 	fmt.Printf("%v %d %d %v\n", ptr, ptr.X, ptr.Y, *ptr)
-	fmt.Print(p1.String())
+	fmt.Println(p1.String())
+	p1.Scale(3)
+	fmt.Println(p1.String())
 }
