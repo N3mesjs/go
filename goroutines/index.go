@@ -14,5 +14,5 @@ func count(s string) {
 
 func main() {
 	go count("fish")
-	go count("cat")
+	count("cat")
 }
