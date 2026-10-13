@@ -38,4 +38,10 @@ func main(){
 	fmt.Println("Pointer to array: ", ptr)
 	fmt.Println("Pointer to array: ", *ptr)
 	fmt.Println(ptr[0])
+
+	// if('о' == 'o'){
+	// 	fmt.Println(true)
+	// } else {
+	// 	fmt.Println(false)
+	// }
 }
