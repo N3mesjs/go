@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"sync"
 	"time"
 )
 
@@ -37,11 +38,26 @@ func generateOrder(count int) []Order {
 	return orders
 }
 
+func reportOrders(orders []Order){
+	for i:=0; i<5; i++{
+		time.Sleep(time.Second * 2)
+		fmt.Printf("---- Order Status Report ----\n")
+		for _, val := range orders {
+			fmt.Printf("Order ID: %d, Status: %s\n", val.ID, val.Status)
+		}
+		fmt.Printf("---------------------------\n")
+	}
+}
+
 func main() {
+	var wg sync.WaitGroup;
+	wg.Add(3)
 	orders := generateOrder(20)
 
-	processOrders(orders)
-	updateStatusOrders(orders)
+	go processOrders(orders)
+	go updateStatusOrders(orders)
+	go reportOrders(orders)
 
-	fmt.Println(orders)
+	wg.Wait()
+	fmt.Println("All operations done!")
 }

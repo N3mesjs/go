@@ -18,3 +18,8 @@ without waiting for other function to finish.
 
 Notice that it will stop whenever the main
 function finishes its execution
+
+## How does it work?
+The go routines are managed by the go `runtime`, 
+that is based on a scheduler that puts these routines
+inside the pc threads
