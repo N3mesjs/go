@@ -16,14 +16,15 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	var orderChan chan *Order = make(chan *Order)
+	var orderChan chan *Order = make(chan *Order, 20)
 	go func(){
+		defer wg.Done()
 		for _, order := range generateOrders(20){
 			orderChan <- order
 		}
 
 		close(orderChan)
-		wg.Done()
+		fmt.Printf("Finished orders generation\n ")
 	}()
 
 	go func(){
