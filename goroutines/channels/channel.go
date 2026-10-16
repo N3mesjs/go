@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"sync"
 	"time"
-	"math/rand"
 )
 
 type Order struct {
@@ -14,9 +14,10 @@ type Order struct {
 
 func main() {
 	var wg sync.WaitGroup
-	wg.Add(2)
+	wg.Add(3)
 
 	var orderChan chan *Order = make(chan *Order, 20)
+	var processChan chan *Order = make(chan *Order, 20)
 	go func(){
 		defer wg.Done()
 		for _, order := range generateOrders(20){
@@ -28,7 +29,28 @@ func main() {
 	}()
 
 	go func(){
-		processOrders(orderChan, &wg)
+		processOrders(orderChan, processChan, &wg)
+	}()
+
+	go func(){
+		defer wg.Done()
+
+		for {
+			select {
+			case processedOrder, ok := <- processChan:
+				if !ok {
+					return
+				}
+
+				fmt.Printf("Processed order no. %d, status %s\n",
+					processedOrder.id, processedOrder.status,
+				)
+			
+			case <-time.After(3*time.Second):
+				fmt.Println("Timeout due to no orders")
+				return
+			}
+		}
 	}()
 
 	wg.Wait()
@@ -45,14 +67,19 @@ func generateOrders(count int) (orders []*Order){
 	return
 }
 
-func processOrders(orderChan <-chan *Order, wg *sync.WaitGroup){
-	defer wg.Done()
-	for order := range orderChan {
+func processOrders(inChan <-chan *Order, outChan chan<- *Order, wg *sync.WaitGroup){
+	defer func(){
+		wg.Done()
+		close(outChan)
+	}()
+
+	for order := range inChan {
 		time.Sleep(
 			time.Duration(rand.Intn(500)) *
 			time.Millisecond,
 		)
-		fmt.Printf("Processing order %d\n", order.id)
+		order.status = "Processed"
+		outChan <- order
 	}
 
 	//same syntax but range manages automatically the

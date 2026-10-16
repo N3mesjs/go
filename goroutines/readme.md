@@ -92,3 +92,45 @@ for message := range messages {
 ```
 
 Here the buffer has a capacity of two. A send blocks when the buffer is full, and a receive blocks when it is empty. After the channel is closed, a `range` loop continues until all buffered values have been received.
+
+## Selecting between channel operations
+
+The `select` statement lets a goroutine wait on several channel operations at once. Each `case` describes a send or receive. Go runs one case whose operation is ready; if multiple cases are ready, it chooses one pseudo-randomly. If none is ready, `select` blocks until one can proceed.
+
+This is useful when a worker must handle incoming values while also reacting to a timeout. The following example follows the order-processing flow in [`channels/channel.go`](channels/channel.go): it receives processed orders from one channel and stops if no order arrives before the timeout.
+
+```go
+for {
+	select {
+	case order, ok := <-processChan:
+		if !ok {
+			// The sender closed the channel: there will be no more orders.
+			return
+		}
+		fmt.Printf("Processed order %d: %s\n", order.id, order.status)
+
+	case <-time.After(3 * time.Second):
+		fmt.Println("Timed out waiting for an order")
+		return
+	}
+}
+```
+
+The receive uses the two-value form, `order, ok := <-processChan`. `ok` is `false` only after the channel has been closed and all buffered values have been received. Checking it prevents treating the zero value of `*Order` (`nil`) as a real order.
+
+`time.After` returns a channel that receives a value after the specified duration. Since it is inside the loop, this example starts a fresh three-second timeout on each iteration. That makes it an **inactivity timeout**: each received order starts a new wait period. If the timeout should apply to the whole operation instead, create the timer before the loop and select on the same timer channel each time.
+
+### Non-blocking `select`
+
+Adding a `default` case makes `select` non-blocking. If no channel operation is ready, Go runs `default` immediately:
+
+```go
+select {
+case message := <-messages:
+	fmt.Println("Received:", message)
+default:
+	fmt.Println("No message available right now")
+}
+```
+
+Use this when you want to check a channel without waiting. Avoid a tight loop around a `default` case, since it can repeatedly consume CPU while doing no useful work.
